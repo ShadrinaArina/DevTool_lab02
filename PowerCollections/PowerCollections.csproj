@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<PackageId>ShadrinaArina.PowerCollections</PackageId>
-		<Version>0.0.1-beta</Version>
+		<Version>0.0.2-beta</Version>
 		<Authors>ShadrinaArina</Authors>
 		<PackageDescription>ShadrinaArina.PowerCollections package</PackageDescription>
 		<RepositoryUrl>https://github.com/ShadrinaArina/DevTool_lab02</RepositoryUrl>
