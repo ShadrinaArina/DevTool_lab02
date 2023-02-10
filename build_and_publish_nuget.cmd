@@ -1,0 +1,2 @@
+dotnet pack --configuration Release
+dotnet nuget push "D:\Arina\PowerCollections\bin\Release\ShadrinaArina.PowerCollections.*.nupkg" --api-key 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 --source "https://nuget.pkg.github.com/ShadrinaArina/index.json"
