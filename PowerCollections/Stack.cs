@@ -24,6 +24,12 @@ namespace PowerCollections
             stack = new T[size];
         }
 
+        public Stack()
+        {
+            this.size = 100;
+            stack = new T[size];
+        }
+
         //добавляет на вершину стека
         public void Push(T item)
         {
