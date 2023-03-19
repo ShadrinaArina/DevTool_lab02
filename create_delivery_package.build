@@ -1,0 +1,39 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<PropertyGroup>
+    <IgnoreTestsResults>false</IgnoreTestsResults>
+    <Configuration>Release</Configuration>
+    <AddSourceCode>true</AddSourceCode>
+</PropertyGroup>
+
+<Import Project="MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+
+<Target Name="Build">
+    <Exec Command="dotnet test" ContinueOnError="$(IgnoreTestsResults)"/>
+    <Exec Command="docfx docfx_project\docfx.json"/>
+
+    <Version VersionFile="VersionFile.txt" BuildType="Increment">
+        <Output TaskParameter="Build" PropertyName="Build"/>
+        <Output TaskParameter="Minor" PropertyName="Minor"/>
+        <Output TaskParameter="Major" PropertyName="Major"/>
+    </Version>
+    <Exec Command="dotnet pack -c $(Configuration) -p:PackageVersion=$(Major).$(Minor).$(Build)"/>
+
+    <ItemGroup>
+        <Product Include="PowerCollections\bin\$(Configuration)\ShadrinaArina.PowerCollections.$(Major).$(Minor).$(Build).nupkg" />
+        <Docs Include="docfx_project\site\**\*.*" />
+        <SourceCode Include="PowerCollections\**"
+            Exclude="PowerCollections\bin\**;PowerCollections\obj\**;PowerCollections\.vs\**"
+            Condition="$(AddSourceCode) == 'true'" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PackDirectory>ShadrinaArina.PowerCollections($([System.DateTime]::Now.ToString(dd.MM.yyyy)))$(Major).$(Minor).$(Build)</PackDirectory>
+    </PropertyGroup>
+
+    <Copy SourceFiles="@(Product)" DestinationFolder="$(PackDirectory)\bin\%(RecursiveDir)" />
+    <Copy SourceFiles="@(Docs)" DestinationFolder="$(PackDirectory)\site\%(RecursiveDir)" />
+    <Copy SourceFiles="@(SourceCode)" DestinationFolder="$(PackDirectory)\src\%(RecursiveDir)" Condition="$(AddSourceCode) == 'true'" />
+
+    <ZipDirectory SourceDirectory="$(PackDirectory)" Overwrite="true" DestinationFile="$(MSBuildProjectDirectory)\$(PackDirectory).zip" />
+</Target>
+</Project>
