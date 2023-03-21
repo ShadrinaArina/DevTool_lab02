@@ -59,7 +59,7 @@ namespace PowerCollections
         {
             StackEnum<T> stackEnum = new StackEnum<T>(stack, count + 1);
             return (IEnumerator)stackEnum;
-        
+        }
     }
 
     //реализация интерфейса IEnumerator
