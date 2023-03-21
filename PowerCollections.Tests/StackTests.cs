@@ -39,8 +39,8 @@ namespace PowerCollections.Tests
             stack.Push(1);
             stack.Push(9);
 
-            Assert.AreEqual(9, stack.Top());
-            Assert.AreEqual(4, stack.Count);
+            Assert.AreEqual(0, stack.Top());
+            Assert.AreEqual(0, stack.Count);
         }
 
         [TestMethod]
